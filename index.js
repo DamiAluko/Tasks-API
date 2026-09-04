@@ -1,6 +1,8 @@
 
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
+require('dotenv').config()
 
 app.use(express.json())
 
@@ -28,7 +30,19 @@ app.post("/tasks", (req,res)=>{
 })
 
 
+connectDB = async() => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI)
+    console.log('Connected to MongoDB')
+  } catch (error) {
+    console.error('MongoDB connection error: ', error)
+  }
+}
 
-app.listen(3000, ()=>{
-  console.log("Server running on Port 3000")
-})
+connectDB()
+
+
+
+// app.listen(3000, ()=>{
+//   console.log("Server running on Port 3000")
+// })
